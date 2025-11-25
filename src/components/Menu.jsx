@@ -1,10 +1,9 @@
 import { useState } from "react";
 import Item from "./Item";
 import OrderModal from "./OrderModal";
-
-function Menu({ menu, cart, setCart }) {
-  const [modalOn, setModalOn] = useState(false);
-  const [modalMenu, setModalMenu] = useState(null);
+import { useSelector } from "react-redux";
+function Menu() {
+  const menu = useSelector((state) => state.menu);
   if (!menu)
     return (
       <div style={{ textAlign: "center", margin: "80px" }}>
@@ -13,6 +12,8 @@ function Menu({ menu, cart, setCart }) {
       </div>
     );
 
+  const [modalOn, setModalOn] = useState(false);
+  const [modalMenu, setModalMenu] = useState(null);
   const categorys = Object.keys(menu);
   return (
     <>
@@ -36,12 +37,7 @@ function Menu({ menu, cart, setCart }) {
         );
       })}
       {modalOn ? (
-        <OrderModal
-          modalMenu={modalMenu}
-          setModalOn={setModalOn}
-          cart={cart}
-          setCart={setCart}
-        />
+        <OrderModal modalMenu={modalMenu} setModalOn={setModalOn} />
       ) : null}
     </>
   );
